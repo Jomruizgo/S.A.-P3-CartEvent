@@ -9,6 +9,7 @@ import com.venuesevents.event_msvc.domain.spi.ITicketPersistencePort;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public class TicketUseCase implements ITicketServicePort {
 
@@ -56,6 +57,12 @@ public class TicketUseCase implements ITicketServicePort {
     public List<Ticket> findTicketListByIds(List<String> ticketIds) {
         return ticketPersistencePort.findTicketListByIds(ticketIds);
     }
+
+    @Override
+    public Map<String, Integer> verifyAndBlockTicketQuantities(Map<String, Integer> ticketQuantities) {
+        return ticketPersistencePort.verifyAndBlockTicketQuantities(ticketQuantities);
+    }
+
 
     @Override
     public void deleteTicket(String ticketId) {

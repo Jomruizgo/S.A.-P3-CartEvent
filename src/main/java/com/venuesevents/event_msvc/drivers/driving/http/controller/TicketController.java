@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/event/ticket")
@@ -60,5 +61,16 @@ public class TicketController {
         );
 
         return new ResponseEntity<>(tickets, HttpStatus.OK);
+    }
+
+    @PostMapping("/verify-and-block")
+    public ResponseEntity<Map<String, Integer>> verifyAndBlockTicketQuantities(@RequestBody Map<String, Integer> ticketQuantities) {
+        Map<String, Integer> insufficientStock = ticketServicePort.verifyAndBlockTicketQuantities(ticketQuantities);
+
+        if (!insufficientStock.isEmpty()) {
+            return ResponseEntity.badRequest().body(insufficientStock);
+        }
+
+        return ResponseEntity.ok().build();
     }
 }
